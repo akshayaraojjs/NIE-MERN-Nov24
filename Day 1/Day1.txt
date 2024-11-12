@@ -1,0 +1,135 @@
+JS Concepts:
+map:
+	Purpose: The map function is used to create a new array by transforming each element in the original array.
+	Ex: const numbers = [1, 2, 3, 4, 5];
+		const doubled = numbers.map(num => num * 2);
+		console.log(doubled); 
+		// Output: [2, 4, 6, 8, 10]
+
+	Usecase: [1,2,3,4,5] => [1,4,9,16,25] //Square of the number
+	
+filter:
+	Purpose: The filter function creates a new array with all elements that pass a specific test or condition.
+	Ex: const numbers = [1, 2, 3, 4, 5];
+		const evenNumbers = numbers.filter(num => num % 2 === 0);
+		console.log(evenNumbers); 
+		// Output: [2, 4]
+		
+	Usecase: [1,5,6,8,12,14,24] => [6,12,24]  //Filter the Multiples of 3
+	
+reduce:
+	Purpose: The reduce function reduces an array to a single value by applying a function to each element.
+	Ex: const numbers = [1, 2, 3, 4, 5];
+		const sum = numbers.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
+		console.log(sum); 
+		// Output: 15
+	
+	Usecase: [5, 12, 8, 21, 7] => [21] //Find the Max value
+	
+Promises:
+	A JavaScript promise has three states:
+	Pending: The initial state, meaning the result hasn't been fulfilled or rejected yet.
+	Fulfilled: The operation completed successfully.
+	Rejected: The operation failed.
+	Ex: 
+	const orderFood = () => {
+	  return new Promise((resolve, reject) => {
+		console.log("Order placed. Waiting for confirmation...");
+
+		setTimeout(() => {
+		  const isAvailable = Math.random() > 0.5; // Simulating a 50/50 chance
+		  if (isAvailable) {
+			resolve("Your food is on its way!");
+		  } else {
+			reject("Sorry, your order couldn't be completed.");
+		  }
+		}, 2000); // Simulate waiting time
+	  });
+	};
+
+	// Use the promise with arrow functions
+	orderFood()
+	  .then((message) => console.log("Success:", message)) // Runs if promise is resolved
+	  .catch((error) => console.log("Error:", error)); // Runs if promise is rejected
+	  
+	Usecase:  Promise to check if a person’s age is above 18 to determine voting eligibility.
+	
+Async-Await:
+	Async functions: Functions that return a promise and allow the use of await.
+	Await: Pauses execution until the promise resolves or rejects, making the code look sequential.
+	Try and Catch: Error handling for promises in async functions, making it easier to catch errors within the awaited code.
+	Ex:
+	async function checkExamResults() {
+		return new Promise((resolve, reject) => {
+			setTimeout(() => {
+				const passed = Math.random() > 0.5;
+				if (passed) {
+					resolve("Congratulations, you passed!");
+				} else {
+					reject("Sorry, you didn’t pass this time.");
+				}
+			}, 2000);
+		});
+	}
+
+	async function getExamResults() {
+		try {
+			const result = await checkExamResults();
+			console.log(result); // Success
+		} catch (error) {
+			console.error(error); // Error
+		}
+	}
+
+	getExamResults();	
+	
+	Usecase: 
+	->Imagine you are working on a banking application.
+	->You need to fetch the account balance from a bank server (simulated as a promise) and then display it.
+	->If the balance is sufficient, you can withdraw money. If not, you get an error message.
+	->You'll need to handle errors (e.g., if the account balance is not available).
+	
+	
+	
+React:
+	It is a library for developing websites or web applications			
+	It is a open-source freely downloadable library for developing single-page websites or single-page web applications			
+	For ex: Facebook,  Google images, google drive			
+	In SPAs, the content or data grows vertically			
+	Reactjs  follows MVC architecture where applications or websites  consists of 3 logical elements or 3 logical groups called Model, View and Controller			
+	ReactJS applications implement Responsive Web Design			
+
+	MVC			
+	M	Model	
+			Data is called as model
+			Data is stored in variables, arrays, objects, structures, linked lists, stacks, queues
+			All these are called as models
+			Model contains data in structured manner or in unstructured manner
+			
+	V	View	
+			Used for capturing data or displaying data in whatever way the user wants
+			A html page is a view
+			Every software/appliation  has a view
+			
+	C	Controller	
+			functionality part or the logic part of the application are called as controllers
+			Generally functions becomes controllers
+			Controllers define the logic and the flow of control of the applications
+			
+	Ex: 	
+	<script>			
+		var   companyName=”Wipro”						//Model block starts
+		var   startDate=”1980s”							//
+		var   joinDate='1970s'							//Model block ends
+
+		function  validateData()				//Controller block starts
+		{		
+			if(companyName == '')	
+				document.writeln('<b>Company name cannot be blank</b>')  		//View Block
+			if (joinDate < startDate)	
+				document.writeln('<b>Join date must be after start date</b>')   //View Block
+		}		
+	</script>                                   //Controller block ends
+	
+	Installing React App:
+	npx create-react-app first-react-app

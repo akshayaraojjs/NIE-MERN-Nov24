@@ -1,0 +1,86 @@
+Answers for Usecase:
+
+	Usecase: [1,2,3,4,5] => [1,4,9,16,25] //Square of the number
+	
+	const numbers = [1, 2, 3, 4, 5];
+	const squared = numbers.map(num => num * num);
+	console.log(squared); 
+	// Output: [1,4,9,16,25]
+		
+	Usecase: [1,5,6,8,12,14,24] => [6,12,24]  //Filter the Multiples of 3
+	
+	const numbers = [1,5,6,8,12,14,24];
+	const multiplesOf3 = numbers.filter(num => num % 3 === 0);
+	console.log(multiplesOf3); 
+	// Output: [6,12,24]
+	
+	Usecase: [5, 12, 8, 21, 7] => [21] //Find the Max value
+	
+	const numbers = [5, 12, 8, 21, 7];
+	const max = numbers.reduce((acc, num) => (num > acc ? num : acc), numbers[0]);
+	console.log(max); 
+	// Output: 21
+	
+	Usecase:  Promise to check if a person’s age is above 18 to determine voting eligibility.
+	
+	const checkVotingEligibility = (age) => {
+	  return new Promise((resolve, reject) => {
+		setTimeout(() => {
+		  if (age >= 18) {
+			resolve(`Age ${age}: You are eligible to vote.`);
+		  } else {
+			reject(`Age ${age}: You are not eligible to vote.`);
+		  }
+		}, 1000); // Simulate a delay
+	  });
+	};
+
+	// Generate a random age between 10 and 20
+	const randomAge = Math.floor(Math.random() * (20 - 10 + 1)) + 10;
+
+	// Use the promise with the random age
+	checkVotingEligibility(randomAge)
+	  .then((message) => console.log("Success:", message)) // Runs if eligible
+	  .catch((error) => console.log("Error:", error)); // Runs if not eligible
+
+	Usecase: 
+	->Imagine you are working on a banking application.
+	->You need to fetch the account balance from a bank server (simulated as a promise) and then display it.
+	->If the balance is sufficient, you can withdraw money. If not, you get an error message.
+	->You'll need to handle errors (e.g., if the account balance is not available).
+	
+	const fetchBalance = () => {
+		return new Promise((resolve, reject) => {
+			setTimeout(() => {
+				const balance = Math.random() > 0.3 ? 1000 : 0; // 70% chance of having balance
+				if (balance > 0) {
+					resolve(balance); // Resolve with balance if available
+				} else {
+					reject("Account balance is insufficient."); // Reject if no balance
+				}
+			}, 2000); // Simulating network delay
+		});
+	};
+
+	// Async function to handle account balance and withdrawal
+	const withdrawMoney = async (amount) => {
+		try {
+			console.log("Checking account balance...");
+			const balance = await fetchBalance(); // Wait for the balance
+			console.log("Account Balance: Rs." + balance);
+
+			if (balance >= amount) {
+				console.log(`Successfully withdrew Rs.${amount}.`);
+			} else {
+				console.log("Insufficient balance to withdraw this amount.");
+			}
+		} catch (error) {
+			console.log("Error:", error); // Handle rejection (insufficient balance)
+		}
+	};
+
+	// Call the withdrawMoney function
+	withdrawMoney(500); // Try withdrawing 500  
+	
+	
+	

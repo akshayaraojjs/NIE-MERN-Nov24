@@ -1,0 +1,95 @@
+1. Importing Dependencies and Setting up MongoDB Connection
+    const mongoose = require('mongoose');
+    const uri = 'mongodb://localhost:27017/trainer_db';
+        mongoose: This is the MongoDB object modeling tool for Node.js. It provides a straightforward way to interact with MongoDB databases.
+        uri: This is the connection string to MongoDB, specifying the database URL. Here, you're connecting to a local MongoDB instance and using the database trainer_db.
+
+2. Defining a Mongoose Schema
+    const userSchema = new mongoose.Schema({
+        name: String,
+        age: Number
+    });
+        userSchema: This defines the structure of documents that will be stored in the User collection. The schema has two fields:
+        name: A string field to store the user's name.
+        age: A number field to store the user's age.
+
+3. Creating a Model
+    const User = mongoose.model('User', userSchema);
+        User: This creates a model named User based on the userSchema. The model is a constructor for creating and interacting with documents in the User collection in MongoDB.
+4. Connecting to MongoDB
+    await mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true });
+    console.log('Connected to MongoDB');
+        mongoose.connect: This establishes a connection to the MongoDB database using the connection URI.
+        useNewUrlParser: true: Tells MongoDB to use the new URL parser for connection strings.
+        useUnifiedTopology: true: Enables the new connection management engine.
+        console.log: Once the connection is established, a confirmation message is logged.
+5. Creating and Saving the First Use
+    const user = new User({ name: 'Alice', age: 25 });
+    await user.save();
+    console.log('User saved:', user);
+        user: A new User document is created with the name "Alice" and age 25.
+        user.save(): This saves the new document to the database.
+        console.log: Logs the saved user document, including any generated _id.
+6. Reading All Users
+    const users = await User.find({});
+    console.log('Found users:', users);
+        User.find({}): This finds all documents in the User collection.
+        console.log: The result (an array of user documents) is logged to the console.
+7. Creating and Saving a Second User
+    const newUser1 = new User({ name: 'John Doe', age: 30 });
+    await newUser1.save();
+    console.log('User created:', newUser1);
+        A new user is created with the name "John Doe" and age 30.
+        This new user is saved to the database, and the saved document is logged.
+8. Creating and Saving a Third User
+    const newUser2 = new User({ name: 'Emily', age: 20 });
+    await newUser2.save();
+    console.log('User created:', newUser2);
+        Similar to the second user, this block creates and saves a user with the name "Emily" and age 20.
+9. Finding a User by _id
+    const user1 = await User.findOne({ _id: '6732a156b1e9119ee65dcf1c' });
+    console.log('User found:', user1);
+        User.findOne({ _id: '6732a156b1e9119ee65dcf1c' }): This searches for a user with a specific _id in the User collection.
+        console.log: The document found by the query is logged to the console.
+        Note: The provided _id value is hardcoded, and it should exist in the database, or the query will return null.
+10. Updating a User Document
+const updateUser = await User.updateOne({ _id: '6732a156b1e9119ee65dcf1c' }, { $set: { name: "Emily Martin" } });
+console.log('User updated:', updateUser);
+User.updateOne: This updates a single user document with the _id 6732a156b1e9119ee65dcf1c, setting the name field to "Emily Martin".
+$set: An update operator that replaces the specified fields in the document.
+console.log: The result of the update operation is logged. This will include the status of the update (e.g., modifiedCount: 1 if one document was updated).
+11. Finding All Users After Update
+
+
+const users_updated = await User.find({});
+console.log('Found users:', users_updated);
+After the update, all users are fetched again using User.find({}).
+The updated list of users is logged, which will include the modified name for the user with _id: '6732a156b1e9119ee65dcf1c'.
+12. Deleting Users by Name
+
+
+const deleteUser = await User.deleteMany({ name: 'Emily' });
+const newUsers4 = await User.find({});
+console.log("users after deletions: ", newUsers4);
+User.deleteMany({ name: 'Emily' }): This deletes all documents where the name field is "Emily". This operation may delete one or more users if there are multiple users with that name.
+newUsers4: After the deletion, all remaining users are fetched again and logged to show the updated list.
+13. Disconnecting from MongoDB
+
+
+await mongoose.disconnect();
+mongoose.disconnect(): This disconnects from the MongoDB database once all operations are complete.
+14. Error Handling
+
+
+main().catch(console.error);
+The main() function is wrapped in a .catch() to handle any errors that may occur during the execution of the function. If there are any errors, they will be printed to the console.
+Summary of the Script's Flow:
+Connect to MongoDB.
+Create and save users to the database.
+Retrieve and display all users.
+Perform an update on a specific user.
+Fetch the updated users.
+Delete users with a specific name.
+Fetch the remaining users.
+Disconnect from the MongoDB database.
+This script demonstrates basic CRUD operations (Create, Read, Update, Delete) using Mongoose and MongoDB in a Node.js application.

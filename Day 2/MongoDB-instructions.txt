@@ -1,0 +1,254 @@
+Download both Mongodb & Mongo Shell application in MSI version to install that.
+
+Install both the application. And change the path while installing mongoshell in easily accessible path.
+Ex: C:/Users/Username/ in this path
+
+mongodb://localhost:27017 : Paste this url in the mongoshell to connect with Mongodb Connection String. 
+
+Now we can run the mongodb queries in mongo shell or mongodb compass application.
+
+Commands for each operation:
+1.Create Database
+	use myDatabase;
+	
+	This command creates (or switches to) a database named myDatabase.
+
+2. Drop Database
+	db.dropDatabase();
+	
+	This command deletes the current database.
+
+3. Create Collection
+	db.createCollection("students");
+	
+	This command creates a new collection named students.
+
+4. Drop Collection
+	db.students.drop();
+	
+	This command deletes the students collection.
+
+5. Data Types 
+	db.students.insertOne({
+	   name: "John Doe",
+	   age: 21,                      // Integer
+	   gpa: 3.5,                     // Double
+	   enrolled: true,               // Boolean
+	   courses: ["Math", "Science"], // Array
+	   address: {                    // Embedded Document
+		  city: "New York",
+		  zip: "10001"
+	   },
+	   registeredAt: new Date()      // Date
+	});
+	
+	MongoDB supports various data types.
+	
+6. Insert Document to Collection
+	db.students.insertOne({
+	   name: "Jane Smith",
+	   age: 22,
+	   major: "Physics"
+	});
+
+	Inserts a single document into the students collection.
+
+	db.students.insertMany([
+	   { name: "Alice", age: 20 },
+	   { name: "Bob", age: 25 }
+	]);
+
+	Inserts multiple documents into the students collection.
+
+7. Query Document
+	db.students.find();
+	
+	Find all documents.
+	
+	db.students.find({ age: { $gte: 21 } });
+	
+	Find documents with specific criteria.
+	
+	db.students.findOne({ name: "Jane Smith" });
+	
+	Find a single document.
+	
+8. Update Document
+	db.s(
+		{ name: "Alice" },
+		{ $set: { age: 23 } }
+	);
+	
+	Update a single document.
+
+	db.students.updateMany(
+		{ age: { $lt: 22 } },
+		{ $set: { status: "junior" } }
+	);
+	
+	Update multiple documents.
+	
+9. Delete Document
+	db.students.deleteOne({ name: "Bob" });
+	
+	Delete a single document.
+	
+	db.students.deleteMany({ age: { $lt: 22 } });
+	
+	Delete multiple documents.
+
+10. Limit
+The limit method is used to restrict the number of documents returned in a query.
+
+	db.students.find().limit(5);
+	
+	This query returns only the first 5 documents from the students collection.
+
+11. Count
+The count method in MongoDB is used to count the number of documents that match a given query.
+
+	db.students.count({ age: { $gte: 21 } });
+	
+12. Comparison Operations
+	$eq: Equal to
+	$ne: Not equal to
+	$gt: Greater than
+	$gte: Greater than or equal to
+	$lt: Less than
+	$lte: Less than or equal to
+	$in: Matches any of the values specified in an array
+	$nin: Matches none of the values specified in an array
+	
+	Equal to ($eq):
+		db.students.find({ age: { $eq: 20 } });
+		
+		Finds all students with an age equal to 20.
+	
+	Not equal to ($ne):
+		db.students.find({ age: { $ne: 21 } });
+		
+		Finds all students whose age is not 21.
+	
+	Greater than ($gt):
+		db.students.find({ age: { $gt: 20 } });
+		
+		Finds all students with an age greater than 20.
+		
+	Greater than or equal to ($gte):
+		db.students.find({ age: { $gte: 23 } });
+		
+		Finds all students with an age of 23 or more.
+		
+	Less than ($lt):
+		db.students.find({ age: { $lt: 18 } });
+		
+		Finds all students with an age lesser than 18.
+
+	Less than or equal to ($lte):
+		db.students.find({ age: { $lte: 20 } });
+		
+		Finds all students with an age of 20 or less.
+
+	In an array ($in):
+		db.students.find({ age: { $in: [18, 21, 25] } });
+
+		Finds all students whose age is either 18, 21, or 25.
+
+	Not in an array ($nin):
+		db.students.find({ age: { $nin: [18, 21, 25] } });
+		
+		Finds all students whose age is neither 18, 21, nor 25.
+		
+13. Logical Operations
+	And Operator ($and):
+		db.students.find({ $and: [ { age: { $gte: 18 } }, { gpa: { $gte: 3.0 } } ] });
+		
+		This query retrieves students who are at least 18 years old and have a GPA of 3.0 or higher.
+	
+	Or Operator ($or):
+		db.students.find({ $or: [ { age: { $lt: 18 } }, { gpa: { $gte: 3.5 } } ] });
+		
+		This query retrieves students who are either under 18 years of age or have a GPA of 3.5 or higher.
+	
+	Not Operator ($not):
+		db.students.find({ age: { $not: { $gte: 18 } } });
+		
+		This query retrieves students whose age is not 18 or older.
+
+	Nor Operator ($nor):
+		db.students.find({ $nor: [ { age: { $lt: 18 } }, { gpa: { $gte: 3.5 } } ] });
+		
+		This query retrieves students who are neither under 18 years of age nor have a GPA of 3.5 or higher.
+		
+14. Sort, Rename, Distinct, Regex
+	Sort:
+		db.students.find().sort({ age: 1 });
+		
+		This sorts the students collection by age in ascending order. To sort by age in descending order, use { age: -1 }.
+	
+	Rename:
+		db.students.updateOne({ name: "Akshay" }, { $rename: { "age": "studentAge" } });
+		
+		This renames the field age to studentAge for the document where the student's name is "Akshay."
+		
+	Distinct:
+		db.students.distinct("course");
+		
+		This retrieves an array of unique course names from the students collection.
+		
+	Regex:
+		db.students.find({ name: { $regex: /^A/, $options: 'i' } });
+		
+		This query finds students whose names start with the letter "A", case-insensitively.
+	
+		db.students.find({ name: { $regex: /ay$/, $options: 'i' } });
+
+		This query finds students whose names ends with the letter "ay", case-insensitively.
+	
+		db.students.find({ name: { $regex: /sh/, $options: 'i' } });
+
+		This query finds students whose names contains with the letter "sh", case-insensitively.
+
+
+10. Indexing
+	db.students.createIndex({ name: 1 });
+	
+	Create an index on the name field.
+	
+	db.students.createIndex({ name: 1, age: -1 });
+	
+	Compound index on multiple fields.
+	
+11. Aggregation
+Aggregation operations can be used to perform complex data transformations.
+
+	db.students.aggregate([
+	   { $match: { age: { $gte: 20 } } },
+	   { $group: { _id: "$major", averageAge: { $avg: "$age" } } }
+	]);
+	
+This pipeline filters students older than 20 and groups them by major, calculating the average age for each major.
+
+12. Replication
+Replication provides data redundancy by copying data across multiple servers.
+
+	rs.initiate({
+	   _id: "rs0",
+	   members: [
+		  { _id: 0, host: "localhost:27017" },
+		  { _id: 1, host: "localhost:27018" },
+		  { _id: 2, host: "localhost:27019" }
+	   ]
+	});
+	
+13. Sharding
+Sharding distributes data across multiple servers, ideal for handling large datasets.
+Steps to enable sharding:
+
+	>Enable sharding on a database:
+		sh.enableSharding("myDatabase");
+		
+	>Shard a collection:
+		sh.shardCollection("myDatabase.students", { "age": 1 });
+		
+This shards the students collection in myDatabase on the age field.

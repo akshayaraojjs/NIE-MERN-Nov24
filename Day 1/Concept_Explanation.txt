@@ -1,0 +1,31 @@
+Step-by-Step Explanation of getting random number b/w 10 - 20
+Math.random():
+
+Math.random() generates a random decimal (floating-point) number between 0 (inclusive) and 1 (exclusive).
+For example, it might generate 0.345, 0.98, or 0.005.
+Math.random() * (20 - 10 + 1):
+
+To get a random number within a specific range, we first need to scale it to that range.
+Here, the range is between 10 and 20. To include 20 as a possible result, we calculate the range size by adding 1 to (20 - 10), giving us 11.
+So, Math.random() * 11 gives a decimal between 0 and just under 11 (e.g., 0.345 * 11 = 3.795).
+Math.floor(...):
+
+Math.floor() rounds down to the nearest integer, so it turns a decimal (like 3.795) into a whole number (3).
+This ensures that the random number is an integer from 0 to 10.
+Adding 10:
+
+Since we want the final range to start from 10, we add 10 to the result.
+This shifts our range up, so instead of 0 to 10, we now get numbers from 10 to 20.
+
+
+
+Difference B/w Promises(Try-Catch) & Async-Await:
+
+	Aspect			Promises (.then/.catch)					Async/Await (with try/catch)
+---------------------------------------------------------------------------------------------------
+Readability		Chained and can become nested			Sequential and easier to read
+Error Handling	Requires .catch() per error block		try/catch centralizes error handling
+Flow Control	Chained structure can feel fragmented	Synchronous-like flow
+Stack Traces	Can be complex and hard to trace		Usually shorter and easier to debug
+Best for		Simple or single async calls			Multiple async operations or complex flows
+
