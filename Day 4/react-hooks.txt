@@ -1,0 +1,272 @@
+React provides several hooks that enable functional components to use state, side effects, context, and more. Here’s a breakdown of the commonly used hooks with brief descriptions and examples.
+
+  1. `useState`
+This hook allows you to add state variables to functional components.
+
+ Example: Simple Counter 
+
+
+ javascript
+import React, { useState } from 'react';
+
+function Counter() {
+  const [count, setCount] = useState(0);
+
+  return (
+    <div>
+      <p>Count: {count}</p>
+      <button onClick={() => setCount(count + 1)}>Increase</button>
+    </div>
+  );
+}
+ 
+
+-  Purpose : Manages component state.
+-  Usage : `[state, setState] = useState(initialValue)`
+
+  2. `useEffect`
+`useEffect` lets you perform side effects in functional components, such as data fetching, subscriptions, or manually changing the DOM.
+
+ Example: Updating Document Title 
+
+ javascript
+import React, { useState, useEffect } from 'react';
+
+function DocumentTitleUpdater() {
+  const [title, setTitle] = useState('Hello');
+
+  useEffect(() => {
+    document.title = title;
+  }, [title]); // Runs only when `title` changes
+
+  return (
+    <input value={title} onChange={(e) => setTitle(e.target.value)} />
+  );
+}
+ 
+
+-  Purpose : Handles side effects after render.
+-  Usage : `useEffect(() => { /* side effect */ }, [dependencies])`
+
+  3. `useContext`
+`useContext` makes it easy to access context values in deeply nested components without prop drilling.
+
+ Example: Themed Button 
+
+ javascript
+import React, { useContext, createContext } from 'react';
+
+const ThemeContext = createContext('light');
+
+function ThemedButton() {
+  const theme = useContext(ThemeContext);
+  return <button style={{ backgroundColor: theme === 'dark' ? '#333' : '#fff' }}>Themed Button</button>;
+}
+
+function App() {
+  return (
+    <ThemeContext.Provider value="dark">
+      <ThemedButton />
+    </ThemeContext.Provider>
+  );
+}
+ 
+
+-  Purpose : Accesses context values directly in components.
+-  Usage : `const value = useContext(Context)`
+
+  4. `useReducer`
+`useReducer` is a more powerful version of `useState`, suited for managing complex state logic and multiple state variables.
+
+ Example: Counter with Reducer 
+
+ javascript
+import React, { useReducer } from 'react';
+
+function counterReducer(state, action) {
+  switch (action.type) {
+    case 'increment':
+      return { count: state.count + 1 };
+    case 'decrement':
+      return { count: state.count - 1 };
+    default:
+      throw new Error();
+  }
+}
+
+function Counter() {
+  const [state, dispatch] = useReducer(counterReducer, { count: 0 });
+
+  return (
+    <div>
+      <button onClick={() => dispatch({ type: 'decrement' })}>-</button>
+      <span>{state.count}</span>
+      <button onClick={() => dispatch({ type: 'increment' })}>+</button>
+    </div>
+  );
+}
+ 
+
+-  Purpose : Manages complex state with reducer functions.
+-  Usage : `[state, dispatch] = useReducer(reducer, initialState)`
+
+  5. `useCallback`
+`useCallback` memoizes a function, ensuring it has the same reference unless its dependencies change. Useful for optimizing components that rely on stable function references.
+
+ Example: Memoized Callback Function 
+
+ javascript
+import React, { useState, useCallback } from 'react';
+
+function Counter() {
+  const [count, setCount] = useState(0);
+
+  const increment = useCallback(() => {
+    setCount((c) => c + 1);
+  }, []);
+
+  return (
+    <div>
+      <p>{count}</p>
+      <button onClick={increment}>Increment</button>
+    </div>
+  );
+}
+ 
+
+-  Purpose : Memoizes a function to avoid re-creation.
+-  Usage : `const memoizedFunction = useCallback(() => { /* function */ }, [dependencies])`
+
+  6. `useMemo`
+`useMemo` memoizes expensive calculations and only recomputes them when dependencies change. It’s useful for optimizing performance.
+
+ Example: Expensive Calculation 
+
+ javascript
+import React, { useState, useMemo } from 'react';
+
+function ExpensiveCalculation({ num }) {
+  const compute = (n) => {
+    // Expensive operation
+    return n * n;
+  };
+
+  const result = useMemo(() => compute(num), [num]);
+
+  return <p>Result: {result}</p>;
+}
+ 
+
+-  Purpose : Memoizes expensive computations.
+-  Usage : `const memoizedValue = useMemo(() => compute(value), [dependencies])`
+
+  7. `useRef`
+`useRef` creates a reference to a DOM element or a value that persists across renders without causing re-renders.
+
+ Example: Focus an Input Element 
+
+ javascript
+import React, { useRef } from 'react';
+
+function FocusInput() {
+  const inputRef = useRef();
+
+  const handleClick = () => {
+    inputRef.current.focus();
+  };
+
+  return (
+    <div>
+      <input ref={inputRef} type="text" />
+      <button onClick={handleClick}>Focus Input</button>
+    </div>
+  );
+}
+ 
+
+-  Purpose : Accesses or stores a mutable value without re-rendering.
+-  Usage : `const ref = useRef(initialValue)`
+
+  8. `useImperativeHandle`
+`useImperativeHandle` customizes the instance value exposed to parent components when using `ref` in custom components.
+
+ Example: Custom Button Ref 
+
+ javascript
+import React, { useImperativeHandle, forwardRef, useRef } from 'react';
+
+const FancyButton = forwardRef((props, ref) => {
+  const buttonRef = useRef();
+
+  useImperativeHandle(ref, () => ({
+    focus: () => {
+      buttonRef.current.focus();
+    }
+  }));
+
+  return <button ref={buttonRef}>Fancy Button</button>;
+});
+
+function App() {
+  const ref = useRef();
+
+  return (
+    <div>
+      <FancyButton ref={ref} />
+      <button onClick={() => ref.current.focus()}>Focus Fancy Button</button>
+    </div>
+  );
+}
+ 
+
+-  Purpose : Exposes specific methods or properties to a parent component.
+-  Usage : `useImperativeHandle(ref, () => ({ /* methods */ }), [dependencies])`
+
+  9. `useLayoutEffect`
+`useLayoutEffect` is similar to `useEffect`, but it runs synchronously after all DOM mutations. It’s commonly used for operations that require DOM measurement.
+
+ Example: DOM Measurement 
+
+ javascript
+import React, { useLayoutEffect, useRef, useState } from 'react';
+
+function Box() {
+  const boxRef = useRef();
+  const [boxWidth, setBoxWidth] = useState(0);
+
+  useLayoutEffect(() => {
+    setBoxWidth(boxRef.current.offsetWidth);
+  }, []);
+
+  return (
+    <div ref={boxRef} style={{ width: '200px', height: '100px', background: 'lightblue' }}>
+      Width: {boxWidth}px
+    </div>
+  );
+}
+ 
+
+-  Purpose : Runs side effects synchronously after DOM updates.
+-  Usage : `useLayoutEffect(() => { /* effect */ }, [dependencies])`
+
+  10. `useDebugValue`
+`useDebugValue` is a hook for adding custom labels in React DevTools for easier debugging. This hook is primarily used in custom hooks.
+
+ Example: Custom Hook with Debug Value 
+
+ javascript
+import { useState, useDebugValue } from 'react';
+
+function useOnlineStatus() {
+  const [isOnline, setIsOnline] = useState(navigator.onLine);
+
+  useDebugValue(isOnline ? 'Online' : 'Offline');
+
+  return isOnline;
+}
+ 
+
+-  Purpose : Provides debug information in DevTools.
+-  Usage : `useDebugValue(value)`
+
+These hooks allow React functional components to be more flexible and efficient, providing access to advanced features such as lifecycle methods, context, complex state, and optimizations.

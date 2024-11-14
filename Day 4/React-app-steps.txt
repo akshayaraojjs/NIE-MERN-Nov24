@@ -1,0 +1,16 @@
+npm create vite@latest mern-trainer-app
+
+cd mern-trainer-app
+
+npm install
+
+npm run dev
+
+npm install axios react-router-dom bootstrap
+	axios for making API requests.
+	react-router-dom for navigation.
+	bootstrap for styling
+	
+npm run dev // For Frontend app
+
+node app.js // For Backend app

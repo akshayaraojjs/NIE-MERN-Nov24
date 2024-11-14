@@ -1,0 +1,52 @@
+Each of these terms plays an important role in building dynamic, interactive, and well-organized components in React:
+
+1.State
+        > Definition: State is like a component’s memory. It’s where a component stores information that can change over time.
+        > Example: A button’s current count (like in a counter app) is stored in the component’s state because it changes every time you click the button.
+        
+        > Why It’s Important: React re-renders the component automatically when the state changes, which helps update the UI.
+
+2.Class Components
+        > Definition: Class components are components written using JavaScript classes (with the `class` keyword). They were the original way to write components in React before hooks.
+        > Example:
+            class MyComponent extends React.Component {
+                render() {
+                    return <h1>Hello, World!</h1>;
+                }
+            }
+
+        > Why It’s Important: Class components allow you to use features like state and lifecycle methods, but they are more complex than functional components. They are still used in some older codebases but are now less common with the rise of hooks.
+
+3.Functional Components
+        > Definition: Functional components are components written as JavaScript functions. They are simpler and easier to read and are now the preferred way to write components in React.
+        > Example:
+            function MyComponent() {
+                return <h1>Hello, World!</h1>;
+            }
+
+        > Why It’s Important: Functional components are lightweight and, with hooks, can do everything that class components can, including managing state and side effects.
+
+4.Lifecycle Methods
+        > Definition: Lifecycle methods are special methods in class components that run at different times in a component’s life (e.g., when it’s created, updated, or removed from the page).
+        > Examples:
+            `componentDidMount`: Runs when the component is added to the page.
+            `componentDidUpdate`: Runs when the component updates due to a change in props or state.
+            `componentWillUnmount`: Runs just before the component is removed from the page.
+
+        > Why It’s Important: These methods let you control what happens at different stages in a component’s life. In functional components, hooks like `useEffect` can handle these same tasks.
+
+5.Props
+        > Definition: Props (short for "properties") are values passed to components from a parent component. They are like function arguments and help components communicate with each other.
+        > Example:
+            function Greeting(props) {
+                return <h1>Hello, {props.name}!</h1>;
+            }
+            <Greeting name="Alice" />
+
+        > Why It’s Important: Props make components reusable and customizable. A component can receive different props and show different data each time without changing the component itself.
+
+6.Side Effects
+        > Definition: Side effects are any actions your component takes that affect something outside its scope, such as updating the document title, fetching data, or setting up a timer.
+        > Example: Fetching data from an API when the component loads.
+
+        > Why It’s Important: Side effects help components interact with the world outside of React. They are often managed using `useEffect` in functional components to ensure they only run when necessary.

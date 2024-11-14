@@ -1,0 +1,40 @@
+1. What is the DOM?
+	Definition: The DOM is an interface that represents the structure of a web page as a tree of objects. Each HTML element becomes a node within this tree.
+	Tree Structure: Explain how the HTML document is parsed into a hierarchical tree structure, with the root being the <html> element, followed by its children, like <head> and <body>.
+	Access and Manipulation: Describe how JavaScript can interact with this structure to change, add, or remove elements dynamically.
+2. DOM Nodes and Elements
+	Node Types: Explain the different node types such as element nodes, text nodes, and attribute nodes.
+	Element Access Methods:
+	document.getElementById(id): Selects a single element by its ID.
+	document.getElementsByClassName(className): Selects elements by class.
+	document.getElementsByTagName(tagName): Selects elements by tag name.
+	document.querySelector(selector) and document.querySelectorAll(selector): Uses CSS selectors to select one or multiple elements.
+	Node Properties: Key properties like innerHTML, textContent, and value are often used to read or set element content and values.
+3. Creating, Updating, and Removing Elements
+	Creating Elements: document.createElement(tagName) is used to create new elements.
+	Appending Elements: appendChild() and append() are used to add elements to the DOM tree.
+	Updating Content: How innerHTML, textContent, and setAttribute() can update existing elements.
+	Removing Elements: removeChild() and remove() to delete elements from the DOM.
+4. DOM Traversal and Manipulation
+	Parent, Child, and Sibling Nodes:
+	parentNode, children, firstChild, lastChild, nextSibling, and previousSibling to navigate through the DOM tree.
+	Class Manipulation:
+	classList.add(), classList.remove(), classList.toggle(), and classList.contains() for dynamically adjusting class names.
+5. Event Listeners
+	Adding Event Listeners:
+		element.addEventListener(event, function) for listening to specific events like clicks or keyboard input.
+	Common Events:
+		click: Triggered when an element is clicked.
+		input: Fires when a user provides input in a form control.
+		change: Detects changes in form elements like dropdowns and checkboxes.
+		submit: Fires when a form is submitted.
+		keydown, keyup: Track when a key is pressed or released.
+		mouseover, mouseout: Triggered when hovering over or leaving an element.
+	DOMContentLoaded: Executes code when the initial HTML document has been fully loaded and parsed.
+	Removing Event Listeners:
+		element.removeEventListener(event, function) to remove previously attached listeners, freeing up memory and improving performance.
+6. Event Object
+	Properties: Introduce the event object and its properties:
+		event.target: The specific element that triggered the event.
+		event.preventDefault(): Prevents the default action (useful for form submission).
+		event.stopPropagation(): Stops the event from further propagation.
